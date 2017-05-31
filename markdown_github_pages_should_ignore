@@ -13,6 +13,7 @@ If the letters $X$ and $Y$ are variables and the letters $a$ and $b$ are constan
 5. $Var(X\pm Y) = Var(X) + Var(Y)$
 6. $Var(a_0 + a_1X_1 + a_2X_2 + ... + a_nX_n) = a_1^2Var(X_1) + a_2^2Var(X_2) + ... + a_n^2Var(X_n)$
 7. A linear combination of independent, normal variables will itself be normally distributed
+8. $$\left(\sum_{i=1}^n c_i\times N(\mu_i, \sigma_i^2) \right)\sim N \left(\sum_{i=1}^n c_i\mu_i, \sum_{i=1}^n c_i^2\sigma_i^2\right)$$
 
 ## Approximating distributions
 
@@ -47,7 +48,7 @@ The test statistic is $\frac{\overline{x} - \mu}{\frac{s}{\sqrt{n}}}$ where $s =
     a. Determine the cumulative binomial probability of $B(n, p)$, or
     b. use $\dfrac{\hat{p} -p}{\sqrt{\frac{p(1-p)}{n}}} \sim N(0, 1)$
 2. To test hypotheses about a Poisson population mean $\lambda$, either
-    a. Determine the cumulative Poisson probability of $P_0(\lambda), or
+    a. Determine the cumulative Poisson probability of $P_0(\lambda)$, or
     b. use $\frac{\hat{\lambda} - \lambda}{\sqrt{\lambda}} \sim N(0, 1),\  \lambda > 10$
     
 # SS05
