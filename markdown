@@ -1,6 +1,123 @@
 # Stats key points
 
+# If it says test. State the fucking hypotheses!
+
+# SS03 
+
+## Contingency tables
+
+1. State hypotheses (In context)
+    i. $H_0$: No assocation 
+    ii $H_1$: Assocation 
+2. Calculate the expected values
+     If any value is less than 5, merge the rows or columns
+4. Calculate the text $\chi^2$ statistic
+5. Find the critical value for $\nu = (n-1)(m-1)$ degrees of freedom
+    This can either be done from the table or with $\text{CHISQUARE_ICDF}(\nu, 1-\alpha)$
+6. If text $\chi^2_t > \chi^2_c$, reject $H_0$ in context
+
+### Yates' correction
+
+For a 2 by 2 table, Yates' correction is used.
+
+Rather than $$\chi^2 = \sum \frac{(O_i - E_i)^2}{E_i}$$ the corrected formula is $$\chi^2 = \sum \frac{(|O_i-E_i|-0.5)^2}{E_i}$$
+
+## Distribution free methods
+
+| Test | For | Use case |
+| --- | --- | --- |
+| Sign test | Median | When Wilcoxon cannot be used as data is not symmetrical or is non-numeric |
+| Wilcoxon signed-rank test | Median or Mean | When a z or t test cannot be used |
+| Mann-Whitney U test | Equality of populations of two samples | There are two samples |
+| Kruskal-Wallis test | Equality of populations of two or more samples | There are more than two samples |
+
+### Sign test
+
+The sign test checks for a difference in the median value by comparing each pair. It does not require a symmetric distribution and could be used on non-numeric data so long as the data can be assigned to two groups (e.g. boolean values of opinions)
+
+1. State hypotheses
+    i. $H_0$ that **population** medians are equal $\eta_1 = \eta_2$
+    ii. $H_1$: that **population** medians are not equal $\eta_1 \neq \eta_2$ or $\eta_1 (> \text{or} <) \eta_2$
+2. Find the differences between each pair, ignoring any equal values
+3. Count $T^+$ the number of positive differences and $T^-$ the number of negative differences
+4. Find the value of $P\left(X < min(T^+, T^-)\ |\ X\sim B(n, \frac 1 2)\right)$
+5. Compare the value above with the significance level. If it is less, reject $H_0$
+
+
+### Wilcoxon Signed-rank test
+
+The Wilcoxon test is similar to the sign test except that it ranks the differences ignoring their signs.
+
+1. State the hypotheses
+    i. $H_0$ **Population** average difference (in mean or median) of 0 
+    ii. $H_1$ **Population** average difference not 0
+2. Rank the absolutes of the differences, giving each rank the sign of its respective difference
+3. Calculate $T^+$ and $T^-$, the sums of the positive and negative ranks respectively. Let $T_t = \text{min}(T^+, T^-)$
+4. Find the critical value, $T_c$ from the table
+5. Compare $T_t$ to $T_c$, rejecting $H_0$ if $T_t$ is smaller
+
+### Mann-Whitney U-test
+
+The Mann-Whitney U test tests whether two samples were taken from the same population. It is used when a t test cannot be applied as the data is not normal
+
+
+1. State the hypotheses
+    i. $H_0$ The samples are from the same population, $\eta_1 = \eta_2$
+    ii. $H_1$ The samples are from different populations, $\eta_1 = \eta_2$
+2. Rank the entire dataset and calculate the sum of the ranks for each set
+3. Calculate the test statistic for each set $U = T - \frac{n(n+1)}{2}$ where $T$ is the sum of the ranks of the set and $n$ is the size of the set.<br> Let $U = \text{min}(U_1, U_2)$
+4. Find the critical value for the significance level and the size of each data set
+5. If $U$ is less than the critical value, reject $H_0$
+
+### Kruskal-Wallis test
+
+The Kruskal-Wallis test is a non-parametric version of the ANOVA test.
+It determines a difference between samples
+
+1. State the hypotheses
+    i. $H_0$ All samples are from the same population
+    ii. $H_1$ Samples are from different populations
+2. Rank the entire dataset and calculate the sum of the ranks of each set
+3. Calculate the test statistic $H = \left(\frac{12}{N(N+1)}\sum \frac{T_i^2}{n_i}\right) - 3(N+1)$ where $N$ is the sum of all samples sizes, and $T_i$ and $n_i$ are the rank sums and sizes of each sample 
+4. Find the degrees of freedom, the number of samples minus one
+5. Calculate the critical value for the given significance level either from the tables or with $\text{CHISQUARE_ICDF}(\nu, 1-\alpha)$
+6. If the test statistic is larger than the critical value, reject $H_0$
+
+## Correlation
+
+### Spearman's Rank Correlation Coefficient
+
+Spearman's rank correlation coefficient is used when the data is ranked.
+
+The value is given by $r_s = 1- \dfrac{6\sum d^2}{n(n^2-1)}$ where $d_i$ is the difference between the rank of a pair of values, and $n$ is the (equal) size of each dataset
+
+#### Testing with the correlation coefficient
+
+A test can be carried out in order to determine whether there is or is not a correlation between two random variables.
+Assuming that the correlation coefficient, $r_s$, is already known.
+
+1. State the hypotheses
+    i. $H_0:\quad \rho = 0$ (independent)
+    ii. $H_1:\quad \rho \neq 0$ (not-independent)
+2. Find the critical value from the table 
+3. If the correlation coefficient is greater than the critical value, reject $H_0$
+
+
+
+## Acceptance and rejection of hypotheses
+
+| Test | Case to reject $H_0$ |
+| --- | --- |
+| Contingency tables | CV > TV |
+| Sign test | TV < CV |
+| Wilcoxon | TV < CV |
+| Mann-Whitney | TV < CV |
+| Kruskal-Wallis | TV > CV
+| Correlation coefficient | TV > CV |
+
 # SS04
+
+
 
 ## Linear combinations of independent normal variables
 
@@ -14,6 +131,10 @@ If the letters $X$ and $Y$ are variables and the letters $a$ and $b$ are constan
 6. $Var(a_0 + a_1X_1 + a_2X_2 + ... + a_nX_n) = a_1^2Var(X_1) + a_2^2Var(X_2) + ... + a_n^2Var(X_n)$
 7. A linear combination of independent, normal variables will itself be normally distributed
 8. $$\left(\sum_{i=1}^n c_i\times N(\mu_i, \sigma_i^2) \right)\sim N \left(\sum_{i=1}^n c_i\mu_i, \sum_{i=1}^n c_i^2\sigma_i^2\right)$$
+
+Given a normal distribution $X\sim N(\overline{x}, \sigma^2)$, if an event is given which is $k$ times $X$ then this new event has a distribution $N(k\times \overline{x}, k \times \sigma^2)$. The standard deviation of the new event is then $\sqrt{k \times \sigma^2}$. 
+
+Given two normal distributions $A\sim N(\overline{x}_A, \sigma^2_A)$, and $B\sim N(\overline{x}_B, \sigma^2_B)$ the normally distributed random variable $A \pm B$ has the distribution $N\left(\overline{x}_A \pm \overline{x}_B, \sigma^2_A + \sigma^2_B\right)$.
 
 ## Approximating distributions
 
@@ -45,11 +166,14 @@ The test statistic is $\frac{\overline{x} - \mu}{\frac{s}{\sqrt{n}}}$ where $s =
 ## Hypothesis tests for proportions and for the mean of a Poisson distribution
 
 1. To test hypotheses about a binomial population proportion, $p$, either:
-    a. Determine the cumulative binomial probability of $B(n, p)$, or
+    a. Determine the cumulative binomial probability of $B(n, p)$
+    State $H_0$ that the mean remains the same, and $H_1$ that it exhibits the expected change. Then find the probability that this value occurs, and reject $H_0$ if the probability is higher than the level of the test.
     b. use $\dfrac{\hat{p} -p}{\sqrt{\frac{p(1-p)}{n}}} \sim N(0, 1)$
+   The hypotheses are then dealt with like a regular normal hypothesis test.
 2. To test hypotheses about a Poisson population mean $\lambda$, either
     a. Determine the cumulative Poisson probability of $P_0(\lambda)$, or
     b. use $\frac{\hat{\lambda} - \lambda}{\sqrt{\lambda}} \sim N(0, 1),\  \lambda > 10$
+    
     
 # SS05
 
