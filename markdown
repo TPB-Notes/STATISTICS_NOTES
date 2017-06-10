@@ -1,5 +1,143 @@
 # Stats key points
 
+## SS02
+
+### Time series analysis
+
+
+#### Seasonal variation 
+
+When asked for the type of variation
+
+**Seasonal variation** If the variations from the fit line appear to follow a pattern
+
+**Random variation** If they don't
+
+#### Moving averages and seasonal effects
+
+**Moving averages** For $\{x_1, x_2, x_3, ..., x_n\},\ a_i = \frac{x_{i-1} + x_i + x_{i+1}}{3}$
+
+**Centered moving average** The average of the current moving average and the surrounding moving averages
+
+
+The seasonal effect is the average of the values of the difference between the actual values and the centered moving average.
+
+Take the centered moving average and subtract it from the actual value for each item in a group. Then calculate the average of these values.
+
+#### Estimation from seasonal effects
+
+Once the seasonal effects has been calculated the fit line can be used to find a value for a given time, and the seasonal effect can then be applied to this value to produce an estimate
+
+### Sampling
+
+#### Simple random samples
+
+1. Assign a range of values to the data
+2. Choose random values from the number table, starting from a random position
+
+Each item has the same probability of being chosen.
+
+If the data is in sections, each section may not be represented.
+May not give correct representations of strata.
+
+#### Stratified random sampling
+
+There may often be factors which divide up the population into groups (strata), and we may expect the measurement of interest to vary among the different groups.
+This can be accounted for when we select a sample from the population in order that we obtain a sample that is representative of the population.
+
+We generally require that the proportion of each stratum in the sample should be the same as in the population.
+
+Stratified sampling techniques are generally used when the population is heterogeneous, or dissimilar, where certain homogeneous sub populations can be isolated.
+
+Some reasons for using stratified sampling over simple random sampling are:
+- The cost per observation may be reduced
+- Estimates of the population parameters may be wanted for each sub-population
+- Increased accuracy at a given cost
+
+#### Cluster, quota, and systematic sampling
+
+##### Cluster sampling
+
+The data is is divided into separate groups. Then a simple random sample of clusters is selected from the population.
+
+The population is divided into $N$ groups, called clusters
+
+The researcher randomly selects $n$ clusters to include in the sample
+
+The number of observations within each cluster $M_j$ is known, and $M = \sum M_j$.
+
+**One-stage sampling** All of the elements within selected clusters are included in the sample
+
+**Two-stage sampling** A subset of elements within selected clusters are randomly selected for inclusion in the sample
+
+Sometimes, the cost per sample point is less for cluster sampling than for other sampling methods. Given a fixed budget, the researcher may be able to use a bigger sample with cluster sampling than with the other methods. When the increased sample size is sufficient to offset the loss in precision, cluster sampling may be the best choice.
+
+Application:
+1. Select a cluster grouping as a sampling frame
+2. Mark each cluster with a unique number
+3. Choose a sample of clusters applying probability sampling
+
+#### Quota sampling 
+
+Quota sampling requires, that representative individuals are chosen from a specific subgroup
+
+Advantages:
+- Primary collection can be done in a short time
+- The application of quota sampling can save costs and time
+- Quota sampling is not dependent on the presence of the sampling frames.
+
+Disadvantages:
+- It is not possible to calculate the sampling error
+- Other important characteristics may be disproportionately represented in the final sample group
+- There is a potential for researcher bis and the quality of work may suffer due to researcher incompetency
+
+#### Systematic sampling
+
+A sampling method in which the first position in the data set is randomly chosen, and every $n^{th}$ position after this is also chosen
+
+Advantages:
+- Allows the researcher to add a degree of system or process into the random selection
+- Known and equal probability of selection
+- The assurance that the population will be evenly sampled. Simple random sampling allows a clustered selection of subjects
+
+Disadvantages:
+- The process of selection can interact with a hidden periodic trait within the population
+- The process can also hide a periodic trait
+
+
+
+### Discrete probability distributions
+
+#### Expectations and variance
+
+#### Poisson
+
+(Same as MS02)
+
+### Interpretation of data
+
+#### Pie charts
+
+#### Line diagrams
+
+#### Box and whisker plots
+
+#### Frequency diagrams
+
+#### Scatter diagrams
+
+**Histograms not required**
+
+### Hypothesis testing
+
+#### Tests for means
+
+#### Errors
+
+**Type I error**: Rejecting a true null hypothesis
+
+**Type II error**: Accepting a false null hypothesis 
+
 # If it says test. State the fucking hypotheses!
 
 # Tests
@@ -28,6 +166,7 @@
 | Paired comparisons | Analysis of the difference between pairs of values sampled from two normal populations | TV > CV | 
 | Analysis of variance | An extension of F tests with more than 2 populations | TV > CV | 
 | Two way analysis of variance | An analysis of variance which accounts for a second factor | TV > CV |
+| Latin squares | | |
 
 # SS03 
 
@@ -298,4 +437,50 @@ $*$ Provided in the formulae booklet
 4. In double sampling, the number of non-conforming items in the first sample will determine whether a decision is made immediately or whether it is delayed until a second sample has been inspected
 5. For acceptance sampling by variables the operating characteristic is a graph of probability of acceptance against batch mean
 
+# MS03
 
+## Bayes' theorem
+
+$$P(A_j | B) = \dfrac{P(A_j)P(B|A_j)}{\sum_{i=1}^nP(A_i)P(B|A_i) }$$
+
+Example
+
+| Event | P(A) | P(B) |
+| --- | --- | --- |
+| C | 0.3 | 0.8 |
+| D | 0.5 | 0.1 |
+| E | 0.2 | 0.4 |
+
+After event A, event B occured. Find the probability that event E occured.
+
+Let F be the probability that event B occured.
+
+$$P(E|F) = \begin{align}&= \frac{P(E)P(F|E)}{P(C)P(C|F) + P(D)P(D|F) + P(E)P(E|F)} \\ &= \frac{0.2\times0.4}{0.3\times0.8 + 0.5\times0.1 + 0.2\times0.4} \\&= \frac{8}{37} \end{align}$$
+
+## Linaer combinations of random variables
+
+Covariance is a measure of the joint variability of two random variables.
+
+$$Cov(X, Y) = E((X - \mu_x)(Y - \mu_y)) = E(XY)-\mu_x\mu_y$$
+
+The covariance can be used to find the product moment correlation coefficient of two random variables:
+
+$$\rho = \frac{Cov(X, Y)}{\sigma_x\sigma_y}$$
+
+The variance can also be computed as
+
+$$Var(aX \pm bY) = a^2Var(X) + b^2Var(Y) \pm 2abCov(X, Y)$$
+
+## Distributional approximations
+
+### Mean and variance of binomial and Poisson distributions
+
+Proof of $\mu = np$ for binomial
+
+$$\begin{align}\mu &= E(X) \\ &= \sum x_i p_i \\
+&= \sum_{x=1}^n x \times \frac{n!}{x!(n-x)!} \times p^x(1-p)^{n-x} \\ &= np\sum_{x=1}^n \frac{(n-1)!}{(x-1)!(n-x)!} \times p^{x-1}(1-p)^{n-x} \\
+&= np\sum_{y-0}^{n-1} \frac{(n-1)!}{y!(n-y-1)!} \times p^{y}(1-p)^{n-y-1}\\
+&= np\sum_{x=1}^{n-1}B(n-1, p) \\
+&= np\end{align}$$
+
+Proof of $\sigma^2 = n(n-1)p$ for binomial
